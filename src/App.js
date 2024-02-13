@@ -7,17 +7,23 @@ import View from './components/View';
 import Sample from './components/Sample';
 import Login from './components/Login';
 import Register from './components/Register';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import About from './components/About';
 function App() {
   return (
     <>
-      <Navbar />
-      <Home />
-      <Profile />
-      <View />
-      <Edit />
-      <Login />
-      <Register />
-      {/* <Sample /> */}
+
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route exact path="/" element={<About />} />
+          <Route exact path="/login" element={<Login />} />
+          <Route exact path="/register" element={<Register />} />
+          <Route exact path="/view" element={<View />} />
+          <Route exact path="/edit" element={<Edit />} />
+          <Route exact path="/home" element={<Home />} />
+        </Routes>
+      </Router>
     </>
   );
 }
