@@ -11,8 +11,6 @@ const Edit = () => {
             }}><h1 className='text-center'>Edit</h1>
                 <h1 className='text-center'>Preview</h1>
             </div>
-
-
             <div className='mx-2' style={{
                 'height': "80vh",
                 "display": "grid",
@@ -29,8 +27,9 @@ const Edit = () => {
                     "background-color": "#C5C5C5",
                     "grid-gap": "10px",
                     "padding": '10px 0',
+                    "border-radius": "1rem"
                 }}>
-                    <textarea id="edit" class="px-2 py-2" style={{ "resize": "none" }} onChange={() => {
+                    <textarea id="edit" className="px-2 py-2" style={{ "resize": "none", "border-radius": "1rem" }} onChange={() => {
                         setSrcdoc(marked.parse(document.getElementById("edit").value));
                     }}></textarea></div>
                 <div className="left mx-auto border border-dark px-3 container-fluid h-100" style={{
@@ -41,9 +40,9 @@ const Edit = () => {
                     "background-color": "#90EE90",
                     "grid-gap": "10px",
                     "padding": '10px 0',
+                    "border-radius": "1rem"
                 }}>
-
-                    <iframe style={{ "width": "100%", "height": "100%" }} srcdoc={"<html><body bgcolor='white'>" + srcDoc + "</body></html>"}></iframe></div>
+                    <iframe style={{ "width": "100%", "height": "100%", "border-radius": "1rem" }} srcdoc={"<html><body bgcolor='white'>" + srcDoc + "</body></html>"}></iframe></div>
             </div >
             <div className='d-flex justify-content-end px-5'>
                 <button className="btn btn-outline-danger mx-3  btn-lg px-5" type="button">Revert</button>

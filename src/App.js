@@ -12,12 +12,12 @@ function App() {
     <>
       <Navbar />
       <Home />
-      {/* <Profile /> */}
+      <Profile />
       <View />
       <Edit />
       <Login />
       <Register />
-      <Sample />
+      {/* <Sample /> */}
     </>
   );
 }

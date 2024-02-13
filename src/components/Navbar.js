@@ -16,7 +16,6 @@ const Navbar = () => {
                         <li className="nav-item">
                             <a className="nav-link " href="/" >About</a>
                         </li></ul>
-
                     <form className="d-flex" role="search">
                         <button className="btn btn-outline-success me-2" type="button">Login</button>
                         <button className="btn btn-sm btn-outline-primary" type="button">Signup</button>
