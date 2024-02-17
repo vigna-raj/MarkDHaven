@@ -22,7 +22,7 @@ router.post('/api/register', [
             }
             const chk_dup = await User.findOne({ email: req.body.email });
             if (chk_dup) {
-                return res.status(400).send("User already exists");
+                return res.status(400).send({ errors: "User already exists" });
             }
             const salt = await bcrypt.genSalt(10);
             const hash = await bcrypt.hash(req.body.password, salt);
@@ -37,7 +37,7 @@ router.post('/api/register', [
             res.json({ token: token })
         }
         catch (er) {
-            res.status(500).send(er.message)
+            res.status(500).send({ errors: er.message })
         }
 
 
@@ -58,17 +58,17 @@ router.post('/api/login', [
             }
             const chk_user = await User.findOne({ email: req.body.email });
             if (!chk_user) {
-                return res.status(400).send("Check your login credentials");
+                return res.status(400).send({ errors: "Check your login credentials" });
             }
             const valid_pass = await bcrypt.compare(req.body.password, chk_user.password);
             if (!valid_pass) {
-                return res.status(400).send("Check your login credentials");
+                return res.status(400).send({ errors: "Check your login credentials" });
             }
             var token = jwt.sign({ id: chk_user._id }, process.env.JWT_KEY);
             res.json({ token: token })
         }
         catch (er) {
-            res.status(500).send("Internal server error")
+            res.status(500).send({ errors: "Internal server error" })
         }
 
     })
@@ -83,7 +83,7 @@ router.post('/api/fetchdata', authenticateToken, async (req, res) => {
         res.send(user)
     } catch (error) {
         console.error(error.message);
-        res.status(500).send("Internal Server Error");
+        res.status(500).send({ errors: "Internal Server Error" });
     }
 })
 module.exports = router

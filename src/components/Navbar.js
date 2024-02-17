@@ -15,12 +15,12 @@ const Navbar = () => {
                             <Link className="nav-link " aria-current="page" to="/">Home</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link " to="/register" >About</Link>
+                            <Link className="nav-link " to="/about" >About</Link>
                         </li></ul>
-                    <form className="d-flex" role="search">
+                    {!localStorage.getItem("token") ? <div>
                         <Link to="/Login" ><button className="btn btn-outline-success me-2" type="button">Login</button></Link>
                         <Link to="/register" ><button className="btn btn-outline-primary" type="button">Signup</button></Link>
-                    </form>
+                    </div> : <Link to="/lo" ><button className="btn btn-outline-primary" type="button">Signup</button></Link>}
                 </div>
             </div>
         </nav>

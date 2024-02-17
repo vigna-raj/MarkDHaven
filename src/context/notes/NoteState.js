@@ -1,64 +1,77 @@
 import { useState } from "react";
 import noteContext from "./noteContext";
 const Notestate = (props) => {
-    const sample = [
-        {
-            "_id": "65d05be4eb02ef1ec3c605fa",
-            "owner_id": "65d057b8eb02ef1ec3c605f2",
-            "title": "Binary search tree",
-            "description": "This note is to store notes on bs",
-            "note": "Binary search is a searching algorithm",
-            "date": "2024-02-17T07:10:28.423Z",
-            "__v": 0
-        },
-        {
-            "_id": "65d05c12eb02ef1ec3c605ff",
-            "owner_id": "65d057b8eb02ef1ec3c605f2",
-            "title": "Binary search tree",
-            "description": "This note is to store notes on bs",
-            "note": "Binary search is a searching algorithm",
-            "date": "2024-02-17T07:11:14.191Z",
-            "__v": 0
-        },
-        {
-            "_id": "65d05c12eb02ef1ec3c60601",
-            "owner_id": "65d057b8eb02ef1ec3c605f2",
-            "title": "Binary search tree",
-            "description": "This note is to store notes on bs",
-            "note": "Binary search is a searching algorithm",
-            "date": "2024-02-17T07:11:14.811Z",
-            "__v": 0
-        }
-    ]
-    const [notes, setNotes] = useState(sample)
+    const host = "http://localhost:5000"
+    const [notes, setNotes] = useState([])
     const [noteid, setNoteid] = useState("");
-    const addNote = (title, description, note) => {
-        setNotes(notes.concat({
-            "_id": "65d05c12eb02ef1ec3c6060",
-            "owner_id": "65d057b8eb02ef1ec3c605f2",
-            "title": title,
-            "description": description,
-            "note": note,
-            "date": "2024-02-17T07:11:14.811Z",
-            "__v": 0
-        }));
+    //Fetch notes
+    const fetchNotes = async () => {
+        //API CALL
+        const response = await fetch(`${host}/note/fetchnote`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "auth-token": localStorage.getItem("token")
+            },
+        });
+        const jsondata = await response.json();
+        setNotes(jsondata);
     }
-    const delNote = (id) => {
-        const newNotes = notes.filter(note => note._id !== id);
-        setNotes(newNotes)
+    // Add new note
+    const addNote = async (title, description, note) => {
+        //API CALL
+        const response = await fetch(`${host}/note/addnote`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "auth-token": localStorage.getItem("token")
+            },
+            body: JSON.stringify({ title, description, note }),
+        });
+        fetchNotes();
     }
-    const updateNote = (id, title, description, note) => {
-        var newNotes = notes;
-        var objIndex = newNotes.findIndex(obj => obj._id === id)
-        // console.log(newNotes);
-        // console.log(objIndex);
-        newNotes[objIndex].title = title;
-        newNotes[objIndex].description = description;
-        newNotes[objIndex].note = note;
-        setNotes(newNotes);
+    // Delete a note
+    const delNote = async (id) => {
+        //API CALL
+        const response = await fetch(`${host}/note/deletenote`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "auth-token": localStorage.getItem("token")
+            },
+            body: JSON.stringify({ id }),
+        });
+        fetchNotes();
+
     }
+    // Update a note
+    const updateNote = async (id, title, description, note) => {
+        //API CALL
+        const response = await fetch(`${host}/note/editnote`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "auth-token": localStorage.getItem("token")
+            },
+            body: JSON.stringify({ id, title, description, note }),
+        });
+        fetchNotes();
+    }
+
+    // Alert function
+    const [alert, setAlert] = useState(null);
+    const showAlert = (message, type) => {
+        setAlert({
+            msg: message,
+            type: type
+        })
+        setTimeout(() => {
+            setAlert(null);
+        }, 1500);
+    }
+
     return (
-        <noteContext.Provider value={{ notes, noteid, setNoteid, addNote, delNote, updateNote }}>
+        <noteContext.Provider value={{ notes, noteid, setNoteid, addNote, delNote, updateNote, fetchNotes, showAlert, alert }}>
             {props.children}
         </noteContext.Provider>
     )
