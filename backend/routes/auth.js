@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-require('dotenv').config()
+const dotenv = require('dotenv').config()
 const User = require("../models/User")
 const { body, validationResult } = require('express-validator');
 var bcrypt = require('bcryptjs');
@@ -9,7 +9,7 @@ var authenticateToken = require("../middleware/authenticateToken")
 
 // Route 1 Endpoint for register using POST (login not required)
 
-router.post('/register', [
+router.post('/api/register', [
     body('name', "Name should be at least 5 chars").isLength({ min: 5 }),
     body('email', "Enter ").isEmail(),
     body('password', "Name should be at least 5 chars").isLength({ min: 5 }),
@@ -37,7 +37,7 @@ router.post('/register', [
             res.json({ token: token })
         }
         catch (er) {
-            res.status(500).send("Internal server error")
+            res.status(500).send(er.message)
         }
 
 
@@ -46,7 +46,7 @@ router.post('/register', [
 
 // Route 2 Endpoint for login using POST(login not required)
 
-router.post('/login', [
+router.post('/api/login', [
     body('email', "Enter ").isEmail(),
     body('password', "Name should be at least 5 chars").isLength({ min: 5 }),
 ],
@@ -76,7 +76,7 @@ router.post('/login', [
 
 // Route 3 Endpoint for fetching user data POST(Login required)
 
-router.post('/fetchdata', authenticateToken, async (req, res) => {
+router.post('/api/fetchdata', authenticateToken, async (req, res) => {
     try {
         const user_id = req.data.id;
         const user = await User.findOne({ _id: user_id }).select("-password");

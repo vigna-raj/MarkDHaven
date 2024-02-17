@@ -18,8 +18,8 @@ const Navbar = () => {
                             <Link className="nav-link " to="/register" >About</Link>
                         </li></ul>
                     <form className="d-flex" role="search">
-                        <button className="btn btn-outline-success me-2" type="button">Login</button>
-                        <button className="btn btn-sm btn-outline-primary" type="button">Signup</button>
+                        <Link to="/Login" ><button className="btn btn-outline-success me-2" type="button">Login</button></Link>
+                        <Link to="/register" ><button className="btn btn-outline-primary" type="button">Signup</button></Link>
                     </form>
                 </div>
             </div>
