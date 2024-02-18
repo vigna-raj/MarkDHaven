@@ -15,7 +15,7 @@ router.post('/addnote', authenticateToken, [
     try {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).send({ errors: errors.array() });
+            return res.status(400).send({ errors: "Error Not saved" });
         }
         const user_id = req.data.id;
         const notes = await Note.create(
@@ -29,7 +29,7 @@ router.post('/addnote', authenticateToken, [
         res.status(200).send("Data added sucessfully!");
     }
     catch (err) {
-        console.error(err.message);
+
         res.status(500).send("Internal server error")
     }
 })
@@ -63,7 +63,6 @@ router.put('/editnote', authenticateToken, async (req, res) => {
 
     }
     catch (err) {
-        console.error(err.message);
         res.status(500).send("Internal server error")
     }
 })
@@ -86,7 +85,7 @@ router.delete('/deletenote', authenticateToken, async (req, res) => {
         res.json({ "Success": "Note has been deleted", note: cur_data });
     }
     catch (err) {
-        console.error(err.message);
+
         res.status(500).send("Internal server error")
     }
 })
@@ -101,7 +100,7 @@ router.post('/fetchnote', authenticateToken, async (req, res) => {
         res.status(200).json(data);
     }
     catch (err) {
-        console.error(err.message);
+
         res.status(500).send("Internal server error")
     }
 })

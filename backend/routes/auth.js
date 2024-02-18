@@ -18,7 +18,7 @@ router.post('/api/register', [
         try {
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
-                return res.status(400).send({ errors: errors.array() });
+                return res.status(400).send({ errors: "Enter valid Email" });
             }
             const chk_dup = await User.findOne({ email: req.body.email });
             if (chk_dup) {
@@ -54,7 +54,7 @@ router.post('/api/login', [
         try {
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
-                return res.status(400).send({ errors: errors.array() });
+                return res.status(400).send({ errors: "Check your login credentials" });
             }
             const chk_user = await User.findOne({ email: req.body.email });
             if (!chk_user) {
@@ -82,7 +82,7 @@ router.post('/api/fetchdata', authenticateToken, async (req, res) => {
         const user = await User.findOne({ _id: user_id }).select("-password");
         res.send(user)
     } catch (error) {
-        console.error(error.message);
+
         res.status(500).send({ errors: "Internal Server Error" });
     }
 })

@@ -19,7 +19,7 @@ const Login = () => {
 
         });
         const jsondata = await response.json();
-        console.log(jsondata);
+
         if (jsondata.errors) {
             showAlert(jsondata.errors, "danger")
         }
@@ -41,10 +41,10 @@ const Login = () => {
                                     <form onSubmit={login}>
                                         <h2 className="fw-bold mb-2 text-uppercase">Login</h2>
                                         <div className="form-outline form-white mb-4 mt-4">
-                                            <input type="email" id="Email" className="form-control form-control-lg" placeholder='Enter Email here' ref={email} />
+                                            <input type="email" id="Email" className="form-control form-control-lg" placeholder='Enter Email here' ref={email} required />
                                         </div>
                                         <div className="form-outline form-white mb-4">
-                                            <input type="password" id="Pass" className="form-control form-control-lg" placeholder='Enter Password here' ref={pass} />
+                                            <input type="password" id="Pass" className="form-control form-control-lg" placeholder='Enter Password here' ref={pass} required minLength={5} />
                                         </div>
                                         <button className="btn btn-outline-dark btn-lg px-5" type="submit" >Login</button>
                                     </form>

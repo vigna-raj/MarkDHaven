@@ -8,19 +8,25 @@ import Register from './components/Register';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import About from './components/About';
 import noteContext from './context/notes/noteContext'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Alert from './components/Alert';
-import Profile from './components/Profile';
+
 
 function App() {
   const { noteid, alert } = useContext(noteContext);
+  useEffect(() => {
+    localStorage.removeItem("token")
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <>
+
       <Router>
         <Navbar />
         <Alert alert={alert} />
         <Routes>
-          <Route exact path="/lo" element={<Profile />} />
+
           <Route exact path="/" element={<Home />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/register" element={<Register />} />

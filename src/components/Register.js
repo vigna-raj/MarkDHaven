@@ -20,7 +20,7 @@ const Register = () => {
 
         });
         const jsondata = await response.json();
-        console.log(jsondata);
+
         if (jsondata.errors) {
             showAlert(jsondata.errors, "danger")
         }
